@@ -1,0 +1,112 @@
+
+MyGdxGame.png
+size: 868,1022
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+log
+  rotate: false
+  xy: 102, 41
+  size: 64, 228
+  split: 0, 64, 9, 23
+  orig: 64, 228
+  offset: 0, 0
+  index: -1
+logBottom
+  rotate: false
+  xy: 450, 609
+  size: 161, 75
+  orig: 161, 75
+  offset: 0, 0
+  index: -1
+logBottom1
+  rotate: false
+  xy: 450, 686
+  size: 161, 174
+  orig: 161, 174
+  offset: 0, 0
+  index: -1
+logHallway
+  rotate: false
+  xy: 2, 629
+  size: 446, 393
+  orig: 446, 393
+  offset: 0, 0
+  index: -1
+logMiddle
+  rotate: false
+  xy: 2, 271
+  size: 159, 220
+  orig: 159, 220
+  offset: 0, 0
+  index: -1
+logSplit
+  rotate: false
+  xy: 168, 85
+  size: 64, 228
+  orig: 64, 228
+  offset: 0, 0
+  index: -1
+logTop1
+  rotate: false
+  xy: 163, 315
+  size: 161, 176
+  orig: 161, 176
+  offset: 0, 0
+  index: -1
+logTopPatch
+  rotate: false
+  xy: 102, 2
+  size: 161, 37
+  orig: 161, 37
+  offset: 0, 0
+  index: -1
+logTopPatch1
+  rotate: false
+  xy: 424, 570
+  size: 161, 37
+  orig: 161, 37
+  offset: 0, 0
+  index: -1
+longMovingConveyorBeltF1
+  rotate: false
+  xy: 2, 31
+  size: 98, 238
+  orig: 98, 238
+  offset: 0, 0
+  index: -1
+sawBladeF1
+  rotate: false
+  xy: 2, 493
+  size: 420, 134
+  orig: 420, 134
+  offset: 0, 0
+  index: -1
+sawBladeF2
+  rotate: false
+  xy: 450, 887
+  size: 418, 135
+  orig: 418, 135
+  offset: 0, 0
+  index: -1
+sawRail
+  rotate: false
+  xy: 450, 862
+  size: 350, 23
+  orig: 350, 23
+  offset: 0, 0
+  index: -1
+smallConveyorBeltF1
+  rotate: false
+  xy: 613, 707
+  size: 100, 153
+  orig: 100, 153
+  offset: 0, 0
+  index: -1
+targetLine
+  rotate: false
+  xy: 424, 538
+  size: 159, 30
+  orig: 159, 30
+  offset: 0, 0
+  index: -1
