@@ -28,7 +28,7 @@ public class WorldController extends InputAdapter {
 	
 	float genTargetY = 0;
 	
-	
+	public ScoreKeeper scoreKeeper;
 	public Log log;
 	public SawBlade sawBlade;
 	public SawRail sawRail;
@@ -47,6 +47,8 @@ public class WorldController extends InputAdapter {
 	}
 	
 	private void initGameObjects() {
+		
+		scoreKeeper = new ScoreKeeper(0, 0, 0, 0); // TODO these values may be used for score display... if not get rid of them
 		log = new Log(0, 9, 1, 5);
 		sawBlade = new SawBlade(1, 3.5f, 1, 1);
 		sawRail = new SawRail(-1.25f, 3.3f, 3.5f, 0.4f);
@@ -62,6 +64,7 @@ public class WorldController extends InputAdapter {
 		upDateGameObjects(deltaTime);
 		handleGameInput(deltaTime);
 		handleDebugInput(deltaTime);
+		scoreKeeper.update(deltaTime);
 		cameraHelper.update(deltaTime);
 	}
 
@@ -70,7 +73,8 @@ public class WorldController extends InputAdapter {
 			sawBlade.slide();
 			if(log.getFalling() == true) {
 				log.setFalling(false);
-				log.split();
+				log.split(target.getY());
+				scoreKeeper.updateScore(log.getCutPoints());
 			} else {
 				log.setFalling(true);
 			}
@@ -86,7 +90,7 @@ public class WorldController extends InputAdapter {
 		if(log.isCut()) {
 			for(int i=0; i<log.getNumberOfLogs(); i++) {
 				log.logSplit[i].setFalling(log.getFalling());
-				log.logSplit[i].update();
+				log.logSplit[i].update(deltaTime);
 			}
 		}
 	}

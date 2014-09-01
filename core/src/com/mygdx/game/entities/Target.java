@@ -35,7 +35,7 @@ public class Target {
 	
 	public void update(float delta){
 		if(log.getFalling()) {
-			y = y- log.getFallSpeed();
+			y = y- log.getFallSpeed()*delta;
 		}
 		targetLineSprite.setBounds(x, y, width, height);
 	}
@@ -53,5 +53,9 @@ public class Target {
 	
 	public void setY(float y) {
 		this.y = y;
+	}
+
+	public float getY() {
+		return y;
 	}
 	}

@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+
 public class ScoreKeeper { //handles game point math and the drawing of them to the screen
 	private int score = 0;
 	private float x, y, width, height;
@@ -20,8 +22,8 @@ public class ScoreKeeper { //handles game point math and the drawing of them to 
 		score = score + pointsAdded;
 	}
 	
-	public void update() {
-		//TODO
+	public void update(float deltaTime) {
+		Gdx.app.log("POINTS", "SCORE == " + score);
 	}
 
 }

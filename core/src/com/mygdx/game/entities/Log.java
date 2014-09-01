@@ -10,8 +10,11 @@ import com.mygdx.game.Assets;
 
 public class Log {
 	
-	float splitTexy;
+	float splitTexy; //
 	float splitTexh; //TODO localize these variables
+	
+	float cutAccuracy;// the distance a cut is made from the target line.
+	
 	
 	//Object bounds variables
 	private float x;
@@ -19,7 +22,7 @@ public class Log {
 	private float width;
 	private float height;
 	
-	private float fallSpeed = 0.1f;
+	private float fallSpeed = 10;
 		
 	//Texture Variables
 	float logBotTexHeight = 24; //The height of the logBottom section of the total log texture
@@ -44,6 +47,7 @@ public class Log {
 	public static float gapSize = 0.25f; //the space between the two logs when cut TODO - make this work
 		
 	int logNumber = 0;
+	int pointValue = 0; //value of points earned for a cut
 	
 	TextureRegion logBodyRegion = new TextureRegion();
 	TextureRegion logBottomRegion = new TextureRegion();
@@ -100,7 +104,7 @@ public class Log {
 		
 		//makes the log fall
 		if(falling) {
-			y = (y-fallSpeed);
+			y = (y-fallSpeed*deltaTime);
 			logBoty = y-logBottomSpriteScreenHeight/2.6f;
 			//splity = splity-fallSpeed;
 		}
@@ -122,13 +126,16 @@ public class Log {
 	}
 
 	//Splits the log in half - kind've messy
-	public void split() {
+	public void split(float targetY) {
 		int splitTexHeight;
 		
 		//Check to see if log is over the cutting line at y=4
 		if(y<4 && (y+mainLogHeight)>4) {
 			
+			cutAccuracy = targetY - 4;
+			calculatePointValue(cutAccuracy);
 			
+			Gdx.app.log("Scorer", "CutAccuracy == " + cutAccuracy);
 			
 			//Sprite heights TODO - Make another variable to take over here instead of changing y directly
 			mainLogHeight = (y+mainLogHeight) - 4;
@@ -162,7 +169,7 @@ public class Log {
 
 			
 			if(!logCut) {
-				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, splitHeight, splitTexHeight, totalTexHeight - splitTexHeight, logTopPatchScreenHeight, logBottomSpriteScreenHeight, false); //hopefully this last variable is right
+				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, splitHeight, splitTexHeight, totalTexHeight - splitTexHeight, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, false); //hopefully this last variable is right
 				
 			}else {
 				
@@ -173,7 +180,7 @@ public class Log {
 					splitTexh = splitTexh + logSplit[i].getTextureHeight(); //texture height from bottom of log
 				}
 				splitTexy = ((totalTexHeight - splitTexh) - splitTexHeight - gapSpace); // texture y value for the split log TODO - account for gap between logs
-				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, (splitHeight), splitTexHeight, splitTexy, logTopPatchScreenHeight, logBottomSpriteScreenHeight, true); //hopefully this last variable is right
+				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, (splitHeight), splitTexHeight, splitTexy, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, true); //hopefully this last variable is right
 			}
 			
 			Gdx.app.log("Logy", "mainLogy:  " + y + ", " + "splitLogy: " + logSplit[0].getY());
@@ -189,6 +196,13 @@ public class Log {
 
 	
 	
+	private void calculatePointValue(float cutAccuracy) {
+		if(Math.abs(cutAccuracy) < 0.25f) pointValue = 10; // "PERFECT"
+		if(Math.abs(cutAccuracy) >= 0.25f && Math.abs(cutAccuracy) < 0.5f) pointValue = 5; // "GREAT"
+		if(Math.abs(cutAccuracy) >= 0.5f && Math.abs(cutAccuracy) < 1) pointValue = 2; // "GOOD"
+		if(Math.abs(cutAccuracy) >= 1) pointValue = 0; // "BAD"
+	}
+
 	//Getters and setters
 	public boolean isCut() {
 		return logCut;
@@ -216,6 +230,10 @@ public class Log {
 
 	public float getFallSpeed() {
 		return this.fallSpeed;
+	}
+	
+	public int getCutPoints() { 
+		return this.pointValue;
 	}
 
 

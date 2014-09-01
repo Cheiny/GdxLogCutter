@@ -21,6 +21,8 @@ public class LogSplit{
 	float logTopPatchScreenHeight;
 	float logBotPatchScreenHeight;
 	
+	float fallSpeed;
+	
 	TextureRegion logSplitRegion = new TextureRegion();
 	TextureRegion logTopPatchRegion = new TextureRegion();
 	TextureRegion logBotPatchRegion = new TextureRegion();
@@ -36,7 +38,7 @@ public class LogSplit{
 					float width, float splitHeight,
 					float splitTexHeight, float splitTexy,				   //	all calculated in Log class 
 					float logTopPatchScreenHeight,						   //	- probs not the best way to do it. 
-					float logBotPatchScreenHeight, boolean drawBotPatch) { //	TODO - try and get rid of some of these and do more calculations inside this class
+					float logBotPatchScreenHeight, float fallSpeed, boolean drawBotPatch) { //	TODO - try and get rid of some of these and do more calculations inside this class
 		
 		this.x = logSplitx;
 		this.y = splity;
@@ -47,6 +49,7 @@ public class LogSplit{
 		this.logBotPatchScreenHeight = logBotPatchScreenHeight;
 		this.splitTexy = splitTexy;
 		this.drawBotPatch = drawBotPatch;
+		this.fallSpeed = fallSpeed;
 		init();
 	}
 
@@ -74,10 +77,10 @@ public class LogSplit{
 		
 	}
 
-	public void update() {
+	public void update(float delta) {
 		
 		if(falling) {
-			y = (y-0.1f);
+			y = (y-fallSpeed*delta);
 		}
 
 		logSplitSprite.setBounds((float)x, (float)y, (float)width, (float)height);
