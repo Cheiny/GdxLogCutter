@@ -104,9 +104,14 @@ public class Log {
 		
 		//makes the log fall
 		if(falling) {
+			if(onScreen()) {
 			y = (y-fallSpeed*deltaTime);
 			logBoty = y-logBottomSpriteScreenHeight/2.6f;
 			//splity = splity-fallSpeed;
+			} else { 
+				respawn();
+			
+			}
 		}
 		
 		//updates the log's body position and size to be drawn to the screen
@@ -114,6 +119,22 @@ public class Log {
 		logBottomSprite.setBounds((float) x, (float) logBoty, (float) width, (float) logBottomSpriteScreenHeight);
 	}
 	
+	private void respawn() { //moves the log back to the top of the screen and resets it's size.
+		y = 9;
+		mainLogHeight = 5;
+		height = 5;
+		logCut = false;
+		init();
+	}
+
+	private boolean onScreen() {
+		if(y < 0 - height){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public void draw(SpriteBatch batch, OrthographicCamera camera){
 		batch.setProjectionMatrix(camera.combined);
 		
@@ -235,6 +256,4 @@ public class Log {
 	public int getCutPoints() { 
 		return this.pointValue;
 	}
-
-
 }

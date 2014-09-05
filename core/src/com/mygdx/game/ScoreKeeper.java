@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 
 public class ScoreKeeper { //handles game point math and the drawing of them to the screen
-	private int score = 0;
+	private static int score = 0;
 	private float x, y, width, height;
 	
 	public ScoreKeeper(float x, float y, float width, float height) {

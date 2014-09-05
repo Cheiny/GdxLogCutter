@@ -79,7 +79,8 @@ public class LogSplit{
 
 	public void update(float delta) {
 		
-		if(falling) {
+		 if(falling) { 
+		//	if(onScreen()) { TODO should probably implement this eventually
 			y = (y-fallSpeed*delta);
 		}
 
@@ -88,7 +89,7 @@ public class LogSplit{
 		if(drawBotPatch) logBotPatchSprite.setBounds((float) x, (float) ((float) y-(logBotPatchScreenHeight/3)), (float) width, (float) logBotPatchScreenHeight);
 
 	}
-	
+
 	public void draw(SpriteBatch batch, OrthographicCamera camera) {
 		
 		batch.setProjectionMatrix(camera.combined);
