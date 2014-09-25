@@ -38,7 +38,8 @@ public class LogSplit{
 					float width, float splitHeight,
 					float splitTexHeight, float splitTexy,				   //	all calculated in Log class 
 					float logTopPatchScreenHeight,						   //	- probs not the best way to do it. 
-					float logBotPatchScreenHeight, float fallSpeed, boolean drawBotPatch) { //	TODO - try and get rid of some of these and do more calculations inside this class
+					float logBotPatchScreenHeight, float fallSpeed,			//	TODO - try and get rid of some of these and do more
+					boolean drawBotPatch) { 								//	do more calculations inside this class
 		
 		this.x = logSplitx;
 		this.y = splity;

@@ -12,6 +12,7 @@ public class WorldRenderer implements Disposable {
 	private SpriteBatch batch;
 	private WorldController worldController;
 
+
 	public WorldRenderer(WorldController worldController) {
 		this.worldController = worldController;
 		init();
@@ -22,12 +23,10 @@ public class WorldRenderer implements Disposable {
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
 		camera.position.set(Constants.VIEWPORT_WIDTH / 2, Constants.VIEWPORT_HEIGHT / 2, 0);
 		camera.update();
-		
 	}
 	
 	public void render() {
 		renderGameObjects();
-		//renderTestObjects();
 	}
 	
 	private void renderGameObjects() {
@@ -35,21 +34,18 @@ public class WorldRenderer implements Disposable {
 		worldController.sawRail.draw(batch, camera);
 		worldController.log.draw(batch, camera);
 		if(worldController.log.isCut() == false) {
-			worldController.target.draw(batch, camera);
+			worldController.log.target.draw(batch, camera);
 		}
 	
 		worldController.sawBlade.draw(batch, camera);
 		
 		if(worldController.log.isCut()) {
-			for(int i=worldController.log.getNumberOfLogs()-1; i>=0; i--) { 
+			for(int i = worldController.log.getNumberOfLogs()-1; i>=0; i--) { 
 				worldController.log.logSplit[i].draw(batch, camera);
 			}
-			worldController.target.draw(batch, camera);
-
+			worldController.log.target.draw(batch, camera);
 		}
-		batch.begin();
-		//worldController.testLine.draw(batch);
-		batch.end();
+		worldController.scoreKeeper.draw(batch);
 	}
 
 	public void resize(int width, int height) {

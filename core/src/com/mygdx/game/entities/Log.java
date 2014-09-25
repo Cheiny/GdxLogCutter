@@ -56,6 +56,7 @@ public class Log {
 	private Sprite logBottomSprite;
 
 	public LogSplit[] logSplit = new LogSplit[5];
+	public Target target;
 	
 	private boolean falling = true;
 	private boolean logCut = false;
@@ -75,6 +76,7 @@ public class Log {
 	
 	public void init() {
 		assembleLog();
+		target = new Target(x, y + MathUtils.random(0.5f, 4.5f), 1, 0.3f);
 	}
 	
 	
@@ -106,6 +108,7 @@ public class Log {
 		if(falling) {
 			if(onScreen()) {
 			y = (y-fallSpeed*deltaTime);
+			target.update(fallSpeed, deltaTime);
 			logBoty = y-logBottomSpriteScreenHeight/2.6f;
 			//splity = splity-fallSpeed;
 			} else { 
@@ -147,13 +150,13 @@ public class Log {
 	}
 
 	//Splits the log in half - kind've messy
-	public void split(float targetY) {
+	public void split() {
 		int splitTexHeight;
 		
 		//Check to see if log is over the cutting line at y=4
 		if(y<4 && (y+mainLogHeight)>4) {
 			
-			cutAccuracy = targetY - 4;
+			cutAccuracy = target.getY() - 4;
 			calculatePointValue(cutAccuracy);
 			
 			Gdx.app.log("Scorer", "CutAccuracy == " + cutAccuracy);
@@ -197,7 +200,7 @@ public class Log {
 				splitTexh = 0;
 				splitTexy = 0;
 				float gapSpace = (float) (gapSize*logNumber); //total amount of space added from all the cuts.
-				for (int i =0; i<logNumber; i++) {
+				for (int i =0; i<logNumber; i++) { //TODO this could be kept for some cool features?
 					splitTexh = splitTexh + logSplit[i].getTextureHeight(); //texture height from bottom of log
 				}
 				splitTexy = ((totalTexHeight - splitTexh) - splitTexHeight - gapSpace); // texture y value for the split log TODO - account for gap between logs
@@ -208,7 +211,8 @@ public class Log {
 			
 			Gdx.app.log("mainLog", "height: " + height);
 			Gdx.app.log("logSplit[" + logNumber + "]", "Texy: " + splitTexy + ", " + "texHeight: " + splitTexh);
-			logNumber++;
+			
+			logNumber++; //TODO add this back if multiple log splits are wanted/needed.
 			
 			logCut = true;
 		}

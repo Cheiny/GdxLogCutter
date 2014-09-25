@@ -17,12 +17,11 @@ public class Target {
 	TextureRegion targetLineRegion = new TextureRegion();
 	Sprite targetLineSprite;
 	
-	public Target(float x, float y, float width, float height, Log log) {
+	public Target(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.log = log;
 		init();
 	}
 	
@@ -33,10 +32,9 @@ public class Target {
 		targetLineSprite.setBounds(x, y, width, height);
 	}
 	
-	public void update(float delta){
-		if(log.getFalling()) {
-			y = y- log.getFallSpeed()*delta;
-		}
+	public void update(float fallSpeed, float deltaTime){
+		
+		y = y - fallSpeed * deltaTime;
 		targetLineSprite.setBounds(x, y, width, height);
 	}
 	
