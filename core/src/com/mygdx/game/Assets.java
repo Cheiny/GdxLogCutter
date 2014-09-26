@@ -117,15 +117,19 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 				}
 			}
 			
+			
 			public class AssetLevelDecoration {
 				public final AtlasRegion smallMovingConveyorBelt;
 				public final AtlasRegion longMovingConveyorBelt;
 				public final AtlasRegion logHallway;
+				public final AtlasRegion assetCautionLine;
 				
 				public AssetLevelDecoration(TextureAtlas atlas) {
 					smallMovingConveyorBelt = atlas.findRegion("smallConveyorBeltF1");
 					longMovingConveyorBelt = atlas.findRegion("longMovingConveyorBeltF1");
 					logHallway = atlas.findRegion("logHallway");
+					assetCautionLine = atlas.findRegion("cautionLine");
+
 				}
 			}
 			

@@ -12,10 +12,15 @@ public class Target {
 	float width;
 	float height;
 	
+	float gapSize = 0.25f;
+	
+	boolean targetSplit = false;
+	
 	Log log;
 	
 	TextureRegion targetLineRegion = new TextureRegion();
-	Sprite targetLineSprite;
+	Sprite targetLineSprite1; // TODO Might have to create an array if multiple cuts are made 
+	Sprite targetLineSprite2;
 	
 	public Target(float x, float y, float width, float height) {
 		this.x = x;
@@ -27,21 +32,31 @@ public class Target {
 	
 	private void init() {
 		targetLineRegion.setRegion(Assets.instance.assetTarget.targetLine);
-		targetLineSprite = new Sprite(targetLineRegion);
+		targetLineSprite1 = new Sprite(targetLineRegion);
+		targetLineSprite2 = new Sprite(targetLineRegion);
 		
-		targetLineSprite.setBounds(x, y, width, height);
+		targetLineSprite1.setBounds(x, y, width, height);
 	}
 	
 	public void update(float fallSpeed, float deltaTime){
 		
 		y = y - fallSpeed * deltaTime;
-		targetLineSprite.setBounds(x, y, width, height);
+		targetLineSprite1.setBounds(x, y, width, height);
+		if(targetSplit) {
+			targetLineSprite2.setBounds(x, y - gapSize, width, height);
+		}
 	}
 	
 	public void draw(SpriteBatch batch, OrthographicCamera camera){
 		batch.setProjectionMatrix(camera.combined);
+		
 		batch.begin();
-		targetLineSprite.draw(batch);
+		targetLineSprite1.draw(batch);
+		
+		if(targetSplit) {
+			targetLineSprite2.draw(batch);
+		}
+		
 		batch.end();
 	}
 	
@@ -55,5 +70,11 @@ public class Target {
 
 	public float getY() {
 		return y;
+	}
+
+	public void split() {  //TODO needs work
+		targetSplit = true;
+		targetLineSprite1.setBounds(x, y, width, height);
+		targetLineSprite2.setBounds(x, y - gapSize, width, height);
 	}
 	}

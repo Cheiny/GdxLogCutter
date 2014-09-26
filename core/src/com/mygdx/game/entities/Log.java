@@ -77,6 +77,7 @@ public class Log {
 	public void init() {
 		assembleLog();
 		target = new Target(x, y + MathUtils.random(0.5f, 4.5f), 1, 0.3f);
+		logNumber = 0;
 	}
 	
 	
@@ -107,7 +108,7 @@ public class Log {
 		//makes the log fall
 		if(falling) {
 			if(onScreen()) {
-			y = (y-fallSpeed*deltaTime);
+			y = (y - fallSpeed*deltaTime);
 			target.update(fallSpeed, deltaTime);
 			logBoty = y-logBottomSpriteScreenHeight/2.6f;
 			//splity = splity-fallSpeed;
@@ -194,8 +195,9 @@ public class Log {
 			
 			if(!logCut) {
 				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, splitHeight, splitTexHeight, totalTexHeight - splitTexHeight, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, false); //hopefully this last variable is right
+				logCut = true;
 				
-			}else {
+			} else {
 				
 				splitTexh = 0;
 				splitTexy = 0;

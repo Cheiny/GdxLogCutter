@@ -31,6 +31,7 @@ public class WorldRenderer implements Disposable {
 	
 	private void renderGameObjects() {
 		//worldController.cameraHelper.applyTo(camera);
+		worldController.cautionLine.draw(batch);
 		worldController.sawRail.draw(batch, camera);
 		worldController.log.draw(batch, camera);
 		if(worldController.log.isCut() == false) {
@@ -39,13 +40,14 @@ public class WorldRenderer implements Disposable {
 	
 		worldController.sawBlade.draw(batch, camera);
 		
+		//Draws the logSplit array if the main log is cut
 		if(worldController.log.isCut()) {
 			for(int i = worldController.log.getNumberOfLogs()-1; i>=0; i--) { 
 				worldController.log.logSplit[i].draw(batch, camera);
 			}
 			worldController.log.target.draw(batch, camera);
 		}
-		worldController.scoreKeeper.draw(batch);
+		worldController.scoreKeeper.draw(batch, camera);
 	}
 
 	public void resize(int width, int height) {
