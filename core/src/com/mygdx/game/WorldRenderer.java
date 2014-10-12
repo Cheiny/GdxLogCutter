@@ -35,7 +35,9 @@ public class WorldRenderer implements Disposable {
 		worldController.sawRail.draw(batch, camera);
 		worldController.log.draw(batch, camera);
 		if(worldController.log.isCut() == false) {
-			worldController.log.target.draw(batch, camera);
+			if(worldController.log.isPerfectCut() == false) {
+				worldController.log.target.draw(batch, camera);
+			}
 		}
 	
 		worldController.sawBlade.draw(batch, camera);
@@ -45,7 +47,9 @@ public class WorldRenderer implements Disposable {
 			for(int i = worldController.log.getNumberOfLogs()-1; i>=0; i--) { 
 				worldController.log.logSplit[i].draw(batch, camera);
 			}
-			worldController.log.target.draw(batch, camera);
+			if(worldController.log.isPerfectCut() == false) {
+				worldController.log.target.draw(batch, camera);
+			}
 		}
 		worldController.scoreKeeper.draw(batch, camera);
 	}

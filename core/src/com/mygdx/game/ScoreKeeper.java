@@ -28,7 +28,7 @@ public class ScoreKeeper { //handles game point math and the drawing of them to 
 	}
 	
 	public void update(float deltaTime) {
-		Gdx.app.log("POINTS", "SCORE == " + score + ", " + scoreStr);
+		//Gdx.app.log("POINTS", "SCORE == " + score + ", " + scoreStr);
 	}
 	
 	public void draw(SpriteBatch batch, OrthographicCamera camera) {

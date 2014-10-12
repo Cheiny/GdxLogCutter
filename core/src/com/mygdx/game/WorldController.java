@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.mygdx.game.entities.CautionLine;
+import com.mygdx.game.entities.BackDrop;
 import com.mygdx.game.entities.Log;
 import com.mygdx.game.entities.LogSplit;
 import com.mygdx.game.entities.SawBlade;
@@ -20,7 +20,7 @@ public class WorldController extends InputAdapter {
 	public Log log;
 	public SawBlade sawBlade;
 	public SawRail sawRail;
-	public CautionLine cautionLine;
+	public BackDrop cautionLine;
 	public static LogSplit[] logSplit = new LogSplit[1];
 	
 	public WorldController() {
@@ -40,7 +40,7 @@ public class WorldController extends InputAdapter {
 		log = new Log(0, 9, 1, 5);
 		sawBlade = new SawBlade(1, 3.5f, 1, 1);
 		sawRail = new SawRail(-1.25f, 3.3f, 3.5f, 0.4f);
-		cautionLine = new CautionLine(-1.5f, 0, 0.5f, 10);
+		cautionLine = new BackDrop(-1.5f, 0, 3.5f, 10);
 	}
 
 
@@ -58,11 +58,11 @@ public class WorldController extends InputAdapter {
 				log.setFalling(false);
 				log.split();
 				scoreKeeper.updateScore(log.getCutPoints());
-				if(log.getCutPoints() == 10) {
+				/*if(log.getCutPoints() == 10) {
 					log.target.split();
-				}
+				}*/
 			} else {
-				//log.setFalling(true);
+				log.setFalling(true);
 			}
 		}
 		

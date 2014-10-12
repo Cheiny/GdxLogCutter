@@ -33,13 +33,14 @@ public class LogSplit{
 	
 	boolean falling = false;
 	boolean drawBotPatch = false;
+	boolean perfectCut;
 	
 	public LogSplit(float logSplitx, float splity,
 					float width, float splitHeight,
 					float splitTexHeight, float splitTexy,				   //	all calculated in Log class 
 					float logTopPatchScreenHeight,						   //	- probs not the best way to do it. 
 					float logBotPatchScreenHeight, float fallSpeed,			//	TODO - try and get rid of some of these and do more
-					boolean drawBotPatch) { 								//	do more calculations inside this class
+					boolean drawBotPatch, boolean perfectCut) { 								//	do more calculations inside this class
 		
 		this.x = logSplitx;
 		this.y = splity;
@@ -51,6 +52,7 @@ public class LogSplit{
 		this.splitTexy = splitTexy;
 		this.drawBotPatch = drawBotPatch;
 		this.fallSpeed = fallSpeed;
+		this.perfectCut = perfectCut;
 		init();
 	}
 
@@ -59,8 +61,12 @@ public class LogSplit{
 		texWidth = Assets.instance.assetLog.logSplit.getRegionWidth();
 		
 		logSplitRegion.setRegion(Assets.instance.assetLog.log, (int) 0, (int) splitTexy, (int) texWidth, (int) splitTexHeight);
-		logTopPatchRegion.setRegion(Assets.instance.assetLog.logTopPatch);
-		
+		if(perfectCut == true) {
+			logTopPatchRegion.setRegion(Assets.instance.assetLog.logTopGreen);
+		} else {
+			logTopPatchRegion.setRegion(Assets.instance.assetLog.logTopPatch);
+		}
+
 		
 		logSplitSprite = new Sprite(logSplitRegion);
 		logTopPatchSprite = new Sprite(logTopPatchRegion);
@@ -113,6 +119,8 @@ public class LogSplit{
 	public float getY() {
 		return y;
 	}
+	
+	
 	
 
 }

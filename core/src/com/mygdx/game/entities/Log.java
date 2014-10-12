@@ -19,6 +19,7 @@ public class Log {
 	//Object bounds variables
 	private float x;
 	private float y;
+	private float baseY; //this one doesn't move around so much and is used to calculate target position
 	private float width;
 	private float height;
 	
@@ -43,11 +44,15 @@ public class Log {
 	float logBottomSpriteScreenHeight;
 	float logTopPatchScreenHeight;
 	float mainLogHeight;
+	
+	float targetYAdj;
 		
 	public static float gapSize = 0.25f; //the space between the two logs when cut TODO - make this work
 		
 	int logNumber = 0;
-	int pointValue = 0; //value of points earned for a cut
+	//int pointValue = 0; //value of points earned for a cut
+	
+	int pointValue = 0;
 	
 	TextureRegion logBodyRegion = new TextureRegion();
 	TextureRegion logBottomRegion = new TextureRegion();
@@ -60,12 +65,14 @@ public class Log {
 	
 	private boolean falling = true;
 	private boolean logCut = false;
+	private boolean perfectCut;
 	
 	
 
 	public Log(int x, int y, int width, int height){
 		this.x = x;
 		this.y = y;
+		this.y = baseY;
 		this.width = width;
 		this.height = height;
 		this.totalHeight = height;
@@ -76,7 +83,9 @@ public class Log {
 	
 	public void init() {
 		assembleLog();
-		target = new Target(x, y + MathUtils.random(0.5f, 4.5f), 1, 0.3f);
+		targetYAdj = MathUtils.random(0.5f, 4.5f);
+		//target = new Target(x, y + targetYAdj, 1, 0.2f);
+		target = new Target(x, y, targetYAdj, 1, 0.2f);
 		logNumber = 0;
 	}
 	
@@ -105,16 +114,19 @@ public class Log {
 
 	public void update(float deltaTime) {
 		
+		Gdx.app.log("Log", "LogY = " + baseY + ", TargetY = " + (target.getY() + targetYAdj) + ", MouseY = " + (baseY + Gdx.input.getY()));
+
+		
 		//makes the log fall
 		if(falling) {
 			if(onScreen()) {
 			y = (y - fallSpeed*deltaTime);
-			target.update(fallSpeed, deltaTime);
+			baseY = (baseY - fallSpeed*deltaTime);
+			target.update(baseY, deltaTime);
 			logBoty = y-logBottomSpriteScreenHeight/2.6f;
 			//splity = splity-fallSpeed;
 			} else { 
 				respawn();
-			
 			}
 		}
 		
@@ -125,9 +137,11 @@ public class Log {
 	
 	private void respawn() { //moves the log back to the top of the screen and resets it's size.
 		y = 9;
+		baseY = 9;
 		mainLogHeight = 5;
 		height = 5;
 		logCut = false;
+		perfectCut = false;
 		init();
 	}
 
@@ -159,6 +173,13 @@ public class Log {
 			
 			cutAccuracy = target.getY() - 4;
 			calculatePointValue(cutAccuracy);
+			
+			if(calculatePointValue(cutAccuracy) == 10) {
+				logBottomRegion.setRegion(Assets.instance.assetLog.logBottomGreen);
+				logBottomSprite.setRegion(logBottomRegion);
+				perfectCut = true;
+				
+			} 
 			
 			Gdx.app.log("Scorer", "CutAccuracy == " + cutAccuracy);
 			
@@ -194,8 +215,10 @@ public class Log {
 
 			
 			if(!logCut) {
-				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, splitHeight, splitTexHeight, totalTexHeight - splitTexHeight, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, false); //hopefully this last variable is right
+				
+				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, splitHeight, splitTexHeight, totalTexHeight - splitTexHeight, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, false, perfectCut); //hopefully this last variable is right
 				logCut = true;
+					
 				
 			} else {
 				
@@ -206,7 +229,7 @@ public class Log {
 					splitTexh = splitTexh + logSplit[i].getTextureHeight(); //texture height from bottom of log
 				}
 				splitTexy = ((totalTexHeight - splitTexh) - splitTexHeight - gapSpace); // texture y value for the split log TODO - account for gap between logs
-				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, (splitHeight), splitTexHeight, splitTexy, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, true); //hopefully this last variable is right
+				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, (splitHeight), splitTexHeight, splitTexy, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, true, perfectCut); //hopefully this last variable is right
 			}
 			
 			Gdx.app.log("Logy", "mainLogy:  " + y + ", " + "splitLogy: " + logSplit[0].getY());
@@ -223,11 +246,15 @@ public class Log {
 
 	
 	
-	private void calculatePointValue(float cutAccuracy) {
+	private int calculatePointValue(float cutAccuracy) {
+		pointValue = 0;
+		
 		if(Math.abs(cutAccuracy) < 0.25f) pointValue = 10; // "PERFECT"
 		if(Math.abs(cutAccuracy) >= 0.25f && Math.abs(cutAccuracy) < 0.5f) pointValue = 5; // "GREAT"
 		if(Math.abs(cutAccuracy) >= 0.5f && Math.abs(cutAccuracy) < 1) pointValue = 2; // "GOOD"
 		if(Math.abs(cutAccuracy) >= 1) pointValue = 0; // "BAD"
+		
+		return pointValue;
 	}
 
 	//Getters and setters
@@ -259,6 +286,9 @@ public class Log {
 		return this.fallSpeed;
 	}
 	
+	public boolean isPerfectCut() {
+		return perfectCut;
+	}
 	public int getCutPoints() { 
 		return this.pointValue;
 	}

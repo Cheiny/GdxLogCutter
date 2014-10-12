@@ -97,6 +97,9 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 				public final AtlasRegion log;
 				public final AtlasRegion logSplit;
 				
+				public final AtlasRegion logTopGreen;
+				public final AtlasRegion logBottomGreen;
+				
 				public final TextureAtlas atlas;
 				
 				public AssetLog(TextureAtlas atlas) {
@@ -105,6 +108,10 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 					logTopPatch = atlas.findRegion("logTopPatch");
 					log = atlas.findRegion("log");
 					logSplit = atlas.findRegion("logSplit");
+					
+					logTopGreen = atlas.findRegion("logTopGreen");
+					logBottomGreen = atlas.findRegion("logBottomGreen");
+					
 					this.atlas = atlas;
 				}
 
@@ -123,12 +130,14 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 				public final AtlasRegion longMovingConveyorBelt;
 				public final AtlasRegion logHallway;
 				public final AtlasRegion assetCautionLine;
+				public final AtlasRegion assetLightConcrete;
 				
 				public AssetLevelDecoration(TextureAtlas atlas) {
 					smallMovingConveyorBelt = atlas.findRegion("smallConveyorBeltF1");
 					longMovingConveyorBelt = atlas.findRegion("longMovingConveyorBeltF1");
 					logHallway = atlas.findRegion("logHallway");
 					assetCautionLine = atlas.findRegion("cautionLine");
+					assetLightConcrete = atlas.findRegion("lightConcrete");
 
 				}
 			}
