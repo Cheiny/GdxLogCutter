@@ -62,6 +62,7 @@ public class Log {
 
 	public LogSplit[] logSplit = new LogSplit[5];
 	public Target target;
+	private Message message;
 	
 	private boolean falling = true;
 	private boolean logCut = false;
@@ -86,6 +87,7 @@ public class Log {
 		targetYAdj = MathUtils.random(0.5f, 4.5f);
 		//target = new Target(x, y + targetYAdj, 1, 0.2f);
 		target = new Target(x, y, targetYAdj, 1, 0.2f);
+		message = Message.NONE;
 		logNumber = 0;
 	}
 	
@@ -249,10 +251,22 @@ public class Log {
 	private int calculatePointValue(float cutAccuracy) {
 		pointValue = 0;
 		
-		if(Math.abs(cutAccuracy) < 0.25f) pointValue = 10; // "PERFECT"
-		if(Math.abs(cutAccuracy) >= 0.25f && Math.abs(cutAccuracy) < 0.5f) pointValue = 5; // "GREAT"
-		if(Math.abs(cutAccuracy) >= 0.5f && Math.abs(cutAccuracy) < 1) pointValue = 2; // "GOOD"
-		if(Math.abs(cutAccuracy) >= 1) pointValue = 0; // "BAD"
+		if(Math.abs(cutAccuracy) < 0.25f) {
+			pointValue = 10; // "PERFECT"
+			message = Message.PERFECT;
+		}
+		if(Math.abs(cutAccuracy) >= 0.25f && Math.abs(cutAccuracy) < 0.5f) {
+			pointValue = 5; // "GREAT"
+			message = Message.GOOD; //TODO add great
+		}
+		if(Math.abs(cutAccuracy) >= 0.5f && Math.abs(cutAccuracy) < 1) {
+			pointValue = 2; // "GOOD"
+			message = Message.GOOD;
+		}
+		if(Math.abs(cutAccuracy) >= 1) {
+			pointValue = 0; // "BAD"
+			message = Message.BAD;
+		}
 		
 		return pointValue;
 	}
@@ -291,5 +305,9 @@ public class Log {
 	}
 	public int getCutPoints() { 
 		return this.pointValue;
+	}
+
+	public  Message getMessage() {
+		return message;
 	}
 }

@@ -3,6 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.entities.EventNotification;
+import com.mygdx.game.entities.Message;
 
 public class WorldRenderer implements Disposable {
 	
@@ -11,6 +13,8 @@ public class WorldRenderer implements Disposable {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private WorldController worldController;
+	
+	Message message = Message.NONE;
 
 
 	public WorldRenderer(WorldController worldController) {
@@ -26,6 +30,7 @@ public class WorldRenderer implements Disposable {
 	}
 	
 	public void render() {
+		worldController.cameraHelper.applyTo(camera);
 		renderGameObjects();
 	}
 	
@@ -34,16 +39,17 @@ public class WorldRenderer implements Disposable {
 		worldController.cautionLine.draw(batch);
 		worldController.sawRail.draw(batch, camera);
 		worldController.log.draw(batch, camera);
+		
 		if(worldController.log.isCut() == false) {
 			if(worldController.log.isPerfectCut() == false) {
 				worldController.log.target.draw(batch, camera);
-			}
+			} 
 		}
 	
 		worldController.sawBlade.draw(batch, camera);
 		
 		//Draws the logSplit array if the main log is cut
-		if(worldController.log.isCut()) {
+		if(worldController.log.isCut()) { //TODO - put a statement here that will create different eventNotifications based on how closely the log was cut.
 			for(int i = worldController.log.getNumberOfLogs()-1; i>=0; i--) { 
 				worldController.log.logSplit[i].draw(batch, camera);
 			}
@@ -52,6 +58,40 @@ public class WorldRenderer implements Disposable {
 			}
 		}
 		worldController.scoreKeeper.draw(batch, camera);
+		
+		drawMessage(); //draws any messages that may be needed.
+	}
+
+	private void drawMessage() {
+		if(message == Message.NONE) {
+			switch(worldController.log.getMessage()) {
+			case BAD:
+				message = Message.BAD;
+				worldController.eventNotification = new EventNotification(Message.BAD);
+				break;
+			case GOOD:
+				message = message.GOOD;
+				worldController.eventNotification = new EventNotification(Message.GOOD);
+				break;
+			case MISS:
+				
+				break;
+			case PERFECT:
+				message = message.PERFECT;
+				worldController.eventNotification = new EventNotification(Message.PERFECT);
+				break;
+			case START:
+				break;
+			default:
+				break;
+			}
+		} else {
+			if(worldController.eventNotification.getAlpha() >= 0) {
+				worldController.eventNotification.draw(batch);
+			} else {
+				message = Message.NONE;
+			}
+		}
 	}
 
 	public void resize(int width, int height) {
