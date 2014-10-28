@@ -23,7 +23,7 @@ public class DesktopLauncher {
 			TexturePacker.process(settings, "assets-raw/images", "assets-raw", "MyGdxGame.pack");
 		}
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		 
+		
 		new LwjglApplication(new MyGdxGameMain(), config);
 	}
 }

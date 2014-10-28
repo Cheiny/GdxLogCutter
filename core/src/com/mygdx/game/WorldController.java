@@ -37,7 +37,9 @@ public class WorldController extends InputAdapter {
 		initGameObjects();
 		Gdx.input.setInputProcessor(this);
 		cameraHelper = new CameraHelper();
-		
+		cameraHelper.setPosition(0, 5);
+		//cameraHelper.setWidth(10);
+		//cameraHelper.setHeight(10);
 	}
 	
 	private void initGameObjects() {
@@ -46,6 +48,8 @@ public class WorldController extends InputAdapter {
 		log = new Log(0, 9, 1, 5);
 		sawBlade = new SawBlade(1, 3.5f, 1, 1);
 		sawRail = new SawRail(-1.25f, 3.3f, 3.5f, 0.4f);
+
+		
 		cautionLine = new BackDrop(-1.5f, 0, 3.5f, 10);
 		
 		eventNotification = new EventNotification(Message.NONE);
@@ -87,7 +91,7 @@ public class WorldController extends InputAdapter {
 			if(log.getFalling() == true) {
 				log.setFalling(false);
 				log.split();
-				scoreKeeper.updateScore(log.getCutPoints());
+				scoreKeeper.updateScore(log.getCounter(), log.getLives());
 				
 				
 				/*if(log.getCutPoints() == 10) {

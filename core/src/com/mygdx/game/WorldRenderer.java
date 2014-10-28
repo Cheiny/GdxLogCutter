@@ -1,8 +1,12 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entities.EventNotification;
 import com.mygdx.game.entities.Message;
 
@@ -11,6 +15,8 @@ public class WorldRenderer implements Disposable {
 	public static final String TAG = WorldRenderer.class.getName();
 	
 	private OrthographicCamera camera;
+	private Viewport viewPort;
+	
 	private SpriteBatch batch;
 	private WorldController worldController;
 	
@@ -25,12 +31,14 @@ public class WorldRenderer implements Disposable {
 	private void init() {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+		viewPort = new FitViewport(640, 480, camera);
 		camera.position.set(Constants.VIEWPORT_WIDTH / 2, Constants.VIEWPORT_HEIGHT / 2, 0);
 		camera.update();
 	}
 	
 	public void render() {
 		worldController.cameraHelper.applyTo(camera);
+		
 		renderGameObjects();
 	}
 	
@@ -87,7 +95,7 @@ public class WorldRenderer implements Disposable {
 			}
 		} else {
 			if(worldController.eventNotification.getAlpha() >= 0) {
-				worldController.eventNotification.draw(batch);
+				worldController.eventNotification.draw(batch, camera);
 			} else {
 				message = Message.NONE;
 			}
@@ -95,7 +103,8 @@ public class WorldRenderer implements Disposable {
 	}
 
 	public void resize(int width, int height) {
-		camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
+		//camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
+		viewPort.update(width, height);
 		camera.update();
 	}
 	

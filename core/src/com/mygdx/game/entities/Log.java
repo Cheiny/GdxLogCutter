@@ -53,6 +53,8 @@ public class Log {
 	//int pointValue = 0; //value of points earned for a cut
 	
 	int pointValue = 0;
+	int counter = 0; // Counts how many logs have been cut for the scoreKeeper.
+	int lives = 0;
 	
 	TextureRegion logBodyRegion = new TextureRegion();
 	TextureRegion logBottomRegion = new TextureRegion();
@@ -156,7 +158,7 @@ public class Log {
 	}
 
 	public void draw(SpriteBatch batch, OrthographicCamera camera){
-		batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(camera.combined); //TODO - Maybe put this inside batch.begin/end block?
 		
 		batch.begin();
 		logBodySprite.draw(batch);
@@ -173,16 +175,8 @@ public class Log {
 		//Check to see if log is over the cutting line at y=4
 		if(y<4 && (y+mainLogHeight)>4) {
 			
-			cutAccuracy = target.getY() - 4;
-			calculatePointValue(cutAccuracy);
-			
-			if(calculatePointValue(cutAccuracy) == 10) {
-				logBottomRegion.setRegion(Assets.instance.assetLog.logBottomGreen);
-				logBottomSprite.setRegion(logBottomRegion);
-				perfectCut = true;
+			scoreCut();
 				
-			} 
-			
 			Gdx.app.log("Scorer", "CutAccuracy == " + cutAccuracy);
 			
 			//Sprite heights TODO - Make another variable to take over here instead of changing y directly
@@ -234,11 +228,6 @@ public class Log {
 				logSplit[logNumber] = new LogSplit( logSplitx, splity, width, (splitHeight), splitTexHeight, splitTexy, logTopPatchScreenHeight, logBottomSpriteScreenHeight, fallSpeed, true, perfectCut); //hopefully this last variable is right
 			}
 			
-			Gdx.app.log("Logy", "mainLogy:  " + y + ", " + "splitLogy: " + logSplit[0].getY());
-			
-			Gdx.app.log("mainLog", "height: " + height);
-			Gdx.app.log("logSplit[" + logNumber + "]", "Texy: " + splitTexy + ", " + "texHeight: " + splitTexh);
-			
 			logNumber++; //TODO add this back if multiple log splits are wanted/needed.
 			
 			logCut = true;
@@ -248,6 +237,24 @@ public class Log {
 
 	
 	
+	private void scoreCut() {
+		cutAccuracy = target.getY() - 4;
+		calculatePointValue(cutAccuracy);
+		
+		if(calculatePointValue(cutAccuracy) == 10) {
+			logBottomRegion.setRegion(Assets.instance.assetLog.logBottomGreen);
+			logBottomSprite.setRegion(logBottomRegion);
+			perfectCut = true;
+			
+		} 
+		if(message == Message.PERFECT) {
+			lives++;
+		}
+		if(message != Message.MISS) {
+			counter++;
+		}
+	}
+
 	private int calculatePointValue(float cutAccuracy) {
 		pointValue = 0;
 		
@@ -306,8 +313,16 @@ public class Log {
 	public int getCutPoints() { 
 		return this.pointValue;
 	}
+	
+	public int getCounter() { // returns # of logs cut
+		return counter;
+	}
 
 	public  Message getMessage() {
 		return message;
+	}
+
+	public int getLives() {
+		return lives;
 	}
 }

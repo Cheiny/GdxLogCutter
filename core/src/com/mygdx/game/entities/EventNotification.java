@@ -1,5 +1,6 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -58,10 +59,11 @@ public class EventNotification {
 		alpha = alpha-delta; //gets to 0 in 1 second?
 	}
 	
-	public void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch, OrthographicCamera camera) {
 		//alpha = alpha-0.1f;
 		sprite.setAlpha(alpha);
-		
+		sprite.setBounds(camera.position.x - width/2, camera.position.y, width, height);
+		batch.setProjectionMatrix(camera.combined);
 		//TODO - make the messages fade out.
 		batch.begin();
 		sprite.draw(batch);

@@ -14,11 +14,15 @@ public class CameraHelper {
 	private Vector2 position;
 	private float zoom;
 	private Sprite target;
+	private float height;
+	private float width;
 	
 	
 	public CameraHelper () {
 		position = new Vector2();
 		zoom = 1.0f;
+		height = Constants.VIEWPORT_HEIGHT;
+		width = Constants.VIEWPORT_WIDTH;
 	}
 	
 	public void update (float deltaTime) {
@@ -47,6 +51,14 @@ public class CameraHelper {
 		return zoom; 
 	}
 	
+	public void setWidth (float width) {
+		this.width = width;
+	}
+	
+	public void setHeight(float height) {
+		this.height = height;
+	}
+	
 	public void setTarget (Sprite target) {
 		this.target = target;
 	}
@@ -64,6 +76,8 @@ public class CameraHelper {
 	public void applyTo (OrthographicCamera camera) {
 		camera.position.x = position.x;
 		camera.position.y = position.y;
+		camera.viewportWidth = width;
+		camera.viewportHeight = height;
 		camera.zoom = zoom;
 		camera.update();
 	}
