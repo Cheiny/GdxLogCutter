@@ -82,7 +82,8 @@ public class WorldRenderer implements Disposable {
 				worldController.eventNotification = new EventNotification(Message.GOOD);
 				break;
 			case MISS:
-				
+				message = message.MISS;
+				worldController.eventNotification = new EventNotification(Message.MISS);
 				break;
 			case PERFECT:
 				message = message.PERFECT;
@@ -98,6 +99,7 @@ public class WorldRenderer implements Disposable {
 				worldController.eventNotification.draw(batch, camera);
 			} else {
 				message = Message.NONE;
+				worldController.log.setMessage(Message.NONE);
 			}
 		}
 	}

@@ -1,92 +1,70 @@
 
 MyGdxGame.png
-size: 972,1007
+size: 963,999
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 badSign
   rotate: false
-  xy: 441, 109
+  xy: 271, 397
   size: 193, 100
   orig: 193, 100
   offset: 0, 0
   index: -1
 cautionLine
   rotate: false
-  xy: 271, 131
+  xy: 653, 245
   size: 36, 481
   orig: 36, 481
   offset: 0, 0
   index: -1
 goodSign
   rotate: false
-  xy: 604, 290
+  xy: 271, 499
   size: 269, 100
   orig: 269, 100
   offset: 0, 0
   index: -1
 lightConcrete
   rotate: false
-  xy: 2, 44
+  xy: 2, 431
   size: 267, 568
   orig: 267, 568
   offset: 0, 0
   index: -1
 log
   rotate: false
-  xy: 309, 144
-  size: 64, 228
-  split: 0, 64, 9, 23
-  orig: 64, 228
+  xy: 2, 199
+  size: 65, 230
+  orig: 65, 230
+  offset: 0, 0
+  index: -1
+log1
+  rotate: false
+  xy: 2, 199
+  size: 65, 230
+  orig: 65, 230
   offset: 0, 0
   index: -1
 logBottom
   rotate: false
-  xy: 636, 135
+  xy: 2, 44
   size: 161, 75
   orig: 161, 75
   offset: 0, 0
   index: -1
-logBottom1
-  rotate: false
-  xy: 441, 211
-  size: 161, 174
-  orig: 161, 174
-  offset: 0, 0
-  index: -1
 logBottomGreen
   rotate: false
-  xy: 604, 212
+  xy: 2, 121
   size: 162, 76
   orig: 162, 76
   offset: 0, 0
   index: -1
-logHallway
+logOutline
   rotate: false
-  xy: 2, 614
-  size: 446, 393
-  orig: 446, 393
-  offset: 0, 0
-  index: -1
-logMiddle
-  rotate: false
-  xy: 409, 387
-  size: 159, 220
-  orig: 159, 220
-  offset: 0, 0
-  index: -1
-logSplit
-  rotate: false
-  xy: 375, 144
-  size: 64, 228
-  orig: 64, 228
-  offset: 0, 0
-  index: -1
-logTop1
-  rotate: false
-  xy: 570, 431
-  size: 161, 176
-  orig: 161, 176
+  xy: 69, 199
+  size: 65, 230
+  orig: 65, 230
   offset: 0, 0
   index: -1
 logTopGreen
@@ -98,63 +76,49 @@ logTopGreen
   index: -1
 logTopPatch
   rotate: false
-  xy: 570, 392
+  xy: 693, 860
   size: 161, 37
   orig: 161, 37
   offset: 0, 0
   index: -1
-logTopPatch1
+missSign
   rotate: false
-  xy: 636, 96
-  size: 161, 37
-  orig: 161, 37
-  offset: 0, 0
-  index: -1
-longMovingConveyorBeltF1
-  rotate: false
-  xy: 309, 374
-  size: 98, 238
-  orig: 98, 238
+  xy: 693, 899
+  size: 270, 100
+  orig: 270, 100
   offset: 0, 0
   index: -1
 perfectSign
   rotate: false
-  xy: 450, 634
+  xy: 271, 626
   size: 380, 100
   orig: 380, 100
   offset: 0, 0
   index: -1
 sawBladeF1
   rotate: false
-  xy: 450, 873
+  xy: 271, 865
   size: 420, 134
   orig: 420, 134
   offset: 0, 0
   index: -1
 sawBladeF2
   rotate: false
-  xy: 450, 736
+  xy: 271, 728
   size: 418, 135
   orig: 418, 135
   offset: 0, 0
   index: -1
 sawRail
   rotate: false
-  xy: 450, 609
+  xy: 271, 601
   size: 350, 23
   orig: 350, 23
   offset: 0, 0
   index: -1
-smallConveyorBeltF1
-  rotate: false
-  xy: 872, 854
-  size: 100, 153
-  orig: 100, 153
-  offset: 0, 0
-  index: -1
 targetLine
   rotate: false
-  xy: 768, 258
+  xy: 691, 828
   size: 159, 30
   orig: 159, 30
   offset: 0, 0

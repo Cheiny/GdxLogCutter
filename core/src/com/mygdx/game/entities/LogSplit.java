@@ -58,9 +58,10 @@ public class LogSplit{
 
 	private void init() {
 		
-		texWidth = Assets.instance.assetLog.logSplit.getRegionWidth();
+		texWidth = Assets.instance.assetLog.log.getRegionWidth();
+		logSplitRegion.setRegion(Assets.instance.assetLog.log);
+		logSplitRegion.setRegion(logSplitRegion, (int) 0, (int) splitTexy, (int) texWidth, (int) splitTexHeight);
 		
-		logSplitRegion.setRegion(Assets.instance.assetLog.log, (int) 0, (int) splitTexy, (int) texWidth, (int) splitTexHeight);
 		if(perfectCut == true) {
 			logTopPatchRegion.setRegion(Assets.instance.assetLog.logTopGreen);
 		} else {

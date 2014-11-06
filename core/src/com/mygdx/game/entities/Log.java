@@ -50,11 +50,6 @@ public class Log {
 	public static float gapSize = 0.25f; //the space between the two logs when cut TODO - make this work
 		
 	int logNumber = 0;
-	//int pointValue = 0; //value of points earned for a cut
-	
-	int pointValue = 0;
-	int counter = 0; // Counts how many logs have been cut for the scoreKeeper.
-	int lives = 0;
 	
 	TextureRegion logBodyRegion = new TextureRegion();
 	TextureRegion logBottomRegion = new TextureRegion();
@@ -68,7 +63,10 @@ public class Log {
 	
 	private boolean falling = true;
 	private boolean logCut = false;
+	private boolean logIgnored = false;
 	private boolean perfectCut;
+	
+	private boolean eventHandled = false;
 	
 	
 
@@ -81,6 +79,7 @@ public class Log {
 		this.totalHeight = height;
 		this.mainLogHeight = height;
 		//this.mainLogy = y;
+		message = Message.NONE;
 		init();
 	}
 	
@@ -89,8 +88,10 @@ public class Log {
 		targetYAdj = MathUtils.random(0.5f, 4.5f);
 		//target = new Target(x, y + targetYAdj, 1, 0.2f);
 		target = new Target(x, y, targetYAdj, 1, 0.2f);
-		message = Message.NONE;
+		//message = Message.NONE;
 		logNumber = 0;
+		logIgnored = false;
+		eventHandled = false;
 	}
 	
 	
@@ -118,7 +119,7 @@ public class Log {
 
 	public void update(float deltaTime) {
 		
-		Gdx.app.log("Log", "LogY = " + baseY + ", TargetY = " + (target.getY() + targetYAdj) + ", MouseY = " + (baseY + Gdx.input.getY()));
+		//Gdx.app.log("Log", "LogY = " + baseY + ", TargetY = " + (target.getY() + targetYAdj) + ", MouseY = " + (baseY + Gdx.input.getY()));
 
 		
 		//makes the log fall
@@ -129,8 +130,15 @@ public class Log {
 			target.update(baseY, deltaTime);
 			logBoty = y-logBottomSpriteScreenHeight/2.6f;
 			//splity = splity-fallSpeed;
+			if(logCut != true && y+height < 4 && eventHandled == false) {
+					scoreCut();
+					logIgnored = true;
+			}
+			
 			} else { 
-				respawn();
+				if(message != Message.MISS) {
+					respawn();
+				}
 			}
 		}
 		
@@ -139,9 +147,11 @@ public class Log {
 		logBottomSprite.setBounds((float) x, (float) logBoty, (float) width, (float) logBottomSpriteScreenHeight);
 	}
 	
+	
+
 	private void respawn() { //moves the log back to the top of the screen and resets it's size.
 		y = 9;
-		baseY = 9;
+		baseY = 9; //TODO changing this value fucks up the target. Fix that so we can change this.
 		mainLogHeight = 5;
 		height = 5;
 		logCut = false;
@@ -177,7 +187,7 @@ public class Log {
 			
 			scoreCut();
 				
-			Gdx.app.log("Scorer", "CutAccuracy == " + cutAccuracy);
+			//Gdx.app.log("Scorer", "CutAccuracy == " + cutAccuracy);
 			
 			//Sprite heights TODO - Make another variable to take over here instead of changing y directly
 			mainLogHeight = (y+mainLogHeight) - 4;
@@ -247,30 +257,22 @@ public class Log {
 			perfectCut = true;
 			
 		} 
-		if(message == Message.PERFECT) {
-			lives++;
-		}
-		if(message != Message.MISS) {
-			counter++;
-		}
 	}
 
 	private int calculatePointValue(float cutAccuracy) {
-		pointValue = 0;
+		int pointValue = 0;
+		
+		message = Message.MISS;
 		
 		if(Math.abs(cutAccuracy) < 0.25f) {
 			pointValue = 10; // "PERFECT"
 			message = Message.PERFECT;
 		}
-		if(Math.abs(cutAccuracy) >= 0.25f && Math.abs(cutAccuracy) < 0.5f) {
+		if((cutAccuracy) >= 0.25f) {
 			pointValue = 5; // "GREAT"
 			message = Message.GOOD; //TODO add great
 		}
-		if(Math.abs(cutAccuracy) >= 0.5f && Math.abs(cutAccuracy) < 1) {
-			pointValue = 2; // "GOOD"
-			message = Message.GOOD;
-		}
-		if(Math.abs(cutAccuracy) >= 1) {
+		if((cutAccuracy) >= 1) {
 			pointValue = 0; // "BAD"
 			message = Message.BAD;
 		}
@@ -310,19 +312,30 @@ public class Log {
 	public boolean isPerfectCut() {
 		return perfectCut;
 	}
-	public int getCutPoints() { 
-		return this.pointValue;
-	}
-	
-	public int getCounter() { // returns # of logs cut
-		return counter;
-	}
+
 
 	public  Message getMessage() {
 		return message;
 	}
 
-	public int getLives() {
-		return lives;
+
+	public void setMessage(Message a) {
+		message = a;
+	}
+	
+	public boolean getLogIgnored() {
+		return logIgnored;
+	}
+	public void setLogIgnored(boolean b) {
+		this.logIgnored = b;
+	}
+
+	public boolean eventHandled() {
+		return eventHandled;
+	}
+
+	public void setEventHandled(boolean b) {
+		eventHandled = b;
+		
 	}
 }

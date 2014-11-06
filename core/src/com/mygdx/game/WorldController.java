@@ -91,14 +91,9 @@ public class WorldController extends InputAdapter {
 			if(log.getFalling() == true) {
 				log.setFalling(false);
 				log.split();
-				scoreKeeper.updateScore(log.getCounter(), log.getLives());
-				
-				
-				/*if(log.getCutPoints() == 10) {
-					log.target.split();
-				}*/
+				scoreKeeper.updateScore(log.getMessage());
 			} else {
-				log.setFalling(true);
+				//log.setFalling(true);
 			}
 		}
 		
@@ -108,6 +103,11 @@ public class WorldController extends InputAdapter {
 		log.update(deltaTime);
 		sawBlade.update(deltaTime);
 		//target.update(deltaTime);
+		
+		if(log.getLogIgnored() == true && log.eventHandled() == false) {
+			scoreKeeper.updateScore(log.getMessage());
+			log.setEventHandled(true);
+		}
 		
 		if(log.isCut()) {
 			for(int i=0; i<log.getNumberOfLogs(); i++) {

@@ -92,10 +92,12 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 			public class AssetLog {
 				//TODO this needs cleaning
 				public final AtlasRegion logBottom;
-				public final AtlasRegion logMiddle;
+				//public final AtlasRegion logMiddle;
 				public final AtlasRegion logTopPatch;
 				public final AtlasRegion log;
-				public final AtlasRegion logSplit;
+				public final AtlasRegion logMeter;
+				public final AtlasRegion logOutline;
+				//public final AtlasRegion logSplit;
 				
 				public final AtlasRegion logTopGreen;
 				public final AtlasRegion logBottomGreen;
@@ -104,10 +106,12 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 				
 				public AssetLog(TextureAtlas atlas) {
 					logBottom = atlas.findRegion("logBottom");
-					logMiddle = atlas.findRegion("logMiddle");
+					//logMiddle = atlas.findRegion("logMiddle");
 					logTopPatch = atlas.findRegion("logTopPatch");
 					log = atlas.findRegion("log");
-					logSplit = atlas.findRegion("logSplit");
+					logMeter = atlas.findRegion("log");
+					logOutline = atlas.findRegion("logOutline");
+					//logSplit = atlas.findRegion("logSplit");
 					
 					logTopGreen = atlas.findRegion("logTopGreen");
 					logBottomGreen = atlas.findRegion("logBottomGreen");
@@ -135,6 +139,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 				public final AtlasRegion goodSign;
 				public final AtlasRegion badSign;
 				public final AtlasRegion perfectSign;
+				public final AtlasRegion missSign;
 				
 				public AssetLevelDecoration(TextureAtlas atlas) {
 					smallMovingConveyorBelt = atlas.findRegion("smallConveyorBeltF1");
@@ -146,6 +151,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 					goodSign = atlas.findRegion("goodSign");
 					badSign = atlas.findRegion("badSign");
 					perfectSign = atlas.findRegion("perfectSign");
+					missSign = atlas.findRegion("missSign");
 
 				}
 			}

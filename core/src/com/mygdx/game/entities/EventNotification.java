@@ -34,10 +34,11 @@ public class EventNotification {
 		region = new TextureRegion(Assets.instance.assetLevelDecoration.perfectSign);
 		break;
 		case MISS:
-			break;
+		region = new TextureRegion(Assets.instance.assetLevelDecoration.missSign);
+		break;
 		case NONE:
 		region = new TextureRegion(Assets.instance.assetLevelDecoration.perfectSign); //shouldn't draw?
-			break;
+		break;
 		case START:
 			break;
 		default:
@@ -64,7 +65,7 @@ public class EventNotification {
 		sprite.setAlpha(alpha);
 		sprite.setBounds(camera.position.x - width/2, camera.position.y, width, height);
 		batch.setProjectionMatrix(camera.combined);
-		//TODO - make the messages fade out.
+		
 		batch.begin();
 		sprite.draw(batch);
 		batch.end();
